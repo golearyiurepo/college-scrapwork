@@ -53,6 +53,7 @@ def makeMove(board, letter, move):
     
 def isWinner(bo, le):
     #Only thing I copy pasted cause this is straight dumb and time consuming and otherwise uninteresting it's really obv to us who wins just need to hard program it
+    #Returns True for a win condition False else
     
     return ((bo[7] == le and bo[8] == le and bo[9] == le) or # across the top
     (bo[4] == le and bo[5] == le and bo[6] == le) or # across the middle
