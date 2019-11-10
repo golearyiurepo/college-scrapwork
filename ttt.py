@@ -53,6 +53,7 @@ def makeMove(board, letter, move):
     
 def isWinner(bo, le):
     #Only thing I copy pasted cause this is straight dumb and time consuming and otherwise uninteresting it's really obv to us who wins just need to hard program it
+    #Takes in a board and letter and allows us to check wins easily
     #Returns True for a win condition False else
     
     return ((bo[7] == le and bo[8] == le and bo[9] == le) or # across the top
@@ -86,11 +87,12 @@ def chooseRandomMoveFromList(board, movesList):
     #Returns a valid move from the valid list on the passed board
     #Returns none if there is no valid move available
     
+    #Creates a list with moves that are legal
     possibleMoves = []
     for i in movesList:
         if isSpaceFree(board, i):
             possibleMoves.append(i)
-    if len(possibleMoves) != 0:
+    if len(possibleMoves) != 0: #check if the game is tied or not
         return random.choice(possibleMoves)
     else:
         return None
@@ -106,20 +108,20 @@ def getComputerMove(board, computerLetter):
     #The meat and bones of the AI that I def didn't need a lot of help writing cause i suck
     
     #Check if we can win in one move
-    for i in range(1, 10):
-        copy = getBoardCopy(board)
-        if isSpaceFree(copy, i):
-            makeMove(copy, computerLetter, i)
-            if isWinner(copy, computerLetter):
+    for i in range(1, 10): #loops through whole board
+        copy = getBoardCopy(board) #create copy board to test moves
+        if isSpaceFree(copy, i): #check if the move we're testing is possible
+            makeMove(copy, computerLetter, i) #test move on copy board
+            if isWinner(copy, computerLetter): #if the move is a winner, we return it!
                 return i
                 
     #Check if the player could win in one move, and stop them
-    
+    #Same idea as above but use playerLetter instead of computerLetter to check human moves
     for i in range(1, 10):
         copy = getBoardCopy(board)
         if isSpaceFree(copy, i):
-            makeMove(copy, playerLetter, i)
-            if isWinner(copy, playerLetter):
+            makeMove(copy, playerLetter, i) 
+            if isWinner(copy, playerLetter): #if player has a winning move, play it to stop them
                 return i
     
     #Try to take a corner
@@ -155,20 +157,25 @@ while True:
     while gameIsPlaying:
         if turn == 'player':
             #players turn
+            
+            #Draw new board
             drawBoard(theBoard)
+            #retrieve and make human move
             move = getPlayerMove(theBoard)
             makeMove(theBoard, playerLetter, move)
             
-            #player wins
+            #player wins lol this has yet to happen
             if isWinner(theBoard, playerLetter):
                 drawBoard(theBoard)
                 print("Hooray! You have won the game!")
                 gameisPlaying = False
+            #i.e what is displayedn 99.99% of the time
             else:
                 if isBoardFull(theBoard):
                     drawBoard(theBoard)
                     print("The game is a tie!")
                     break
+                #hand off control to the AI for its move
                 else:
                     turn = 'computer'
         else:
@@ -176,16 +183,20 @@ while True:
             move = getComputerMove(theBoard, computerLetter)
             makeMove(theBoard, computerLetter, move)
             
+            #Check if computer move wins and leaves game if true
             if isWinner(theBoard, computerLetter):
                 drawBoard(theBoard)
                 print("Computer wins! You lose!")
                 gameIsPlaying = False
+            #otherwise check if the game is tied
             else:
                 if isBoardFull(theBoard):
                     drawBoard(theBoard)
                     print("This game is tied")
                     break
+                #then hand off control back to human
                 else:
                     turn = 'player'
+    #Do we want to play again?                
     if not playAgain():
         break
