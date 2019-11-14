@@ -40,6 +40,15 @@ class Line:
             return ((self.p2.y - self.p1.y) / (self.p2.x - self.p1.x))
         return "undefined"
 
+    def getEquation(self):
+        b = (-self.slope() *self.p1.x) + self.p1.y
+        if b < 0:
+            return "y = %fx %f" % (self.slope(), b)
+        return "y = %fx + %f" % (self.slope(), b)
+#y = mx + b
+#-b = mx - y
+#b = -mx + y
+
 if __name__ == '__main__':
     print "Creating a Line"
 
@@ -60,9 +69,10 @@ if __name__ == '__main__':
     print "1) Display line"
     print "2) Display line's length"
     print "3) Display line's slope"
-    print "4) Quit program"
+    print "4) Display line's equaion"
+    print "5) Quit program"
     choice_string = raw_input("Make a choice: ")
-    
+
     active = True
     while active:
 
@@ -71,7 +81,7 @@ if __name__ == '__main__':
         except ValueError:
             sys.exit("Not an integer!  Goodbye!")
             active = False
-        
+
         if choice == 1:
             print line
             choice_string = raw_input("What's your next choice?: ")
@@ -87,6 +97,9 @@ if __name__ == '__main__':
                 print "Slope is %f " % line_slope
             choice_string = raw_input("What's your next choice?: ")
         elif choice == 4:
+            print line.getEquation()
+            choice_string = raw_input("What's your next chocie?: ")
+        elif choice == 5:
             print "Goodbye!"
             active = False
         else:
