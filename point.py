@@ -40,7 +40,11 @@ class Line:
             return ((self.p2.y - self.p1.y) / (self.p2.x - self.p1.x))
         return "undefined"
 
+    #How do we make this not break for an undefined line?
+    #current working solution is a hard code but it works? sorta so i keep for now
     def getEquation(self):
+        if self.slope() == 'undefined':
+            return 'x = %f' % self.p1.x
         b = (-self.slope() *self.p1.x) + self.p1.y
         if b < 0:
             return "y = %fx %f" % (self.slope(), b)
