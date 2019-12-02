@@ -1,4 +1,5 @@
 #Tic Tac Toe AI with help from the internet not capping
+#Authored by Gavin O'Leary. Please distribute as free and open source software. See LICENSE.md
 
 import random
 
